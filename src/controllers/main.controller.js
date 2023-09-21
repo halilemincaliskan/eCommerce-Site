@@ -1,25 +1,27 @@
 const User = require("../models/Users.model");
 
-function getUser(req, res) {
-    User.find().then((user) => {
-      res.json(user);
-    }).catch((err) => {
-      res.json(err);
-    });
+async function getUser(req, res) {
+    const users = await User.find({});
+    try {
+      res.send(users);
+    } catch(error) {
+      res.status(500).send(error)
+    }
 };
 
-function postUser(req, res){
-    new User({
+async function postUser(req, res){
+    const user = new User({
       name: req.body.name,
       surname: req.body.surname,
       username: req.body.username,
       pass: req.body.pass,
-    }).save().then(() => {
-        res.json("Kaydetme İşlemi Başarılı.");
-    }).catch((err) => {
-        res.json(err);
-        console.log(err);
     });
+    try {
+      await user.save();
+      res.send(user);
+    } catch(error) {
+      res.status(500).send(error)
+    }
 };
 
 module.exports = {

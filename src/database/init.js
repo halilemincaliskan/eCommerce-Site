@@ -1,10 +1,8 @@
-var mongoose = require("mongoose");
-
-const server = '127.0.0.1:27017'; 
-const database = 'eCommerceSiteDB'; 
+const mongoose = require("mongoose");
+const config = require('../config/database.config');
 
 module.exports = () => {
-    mongoose.connect(`mongodb://${server}/${database}`);
+    mongoose.connect(config.uri);
 
     mongoose.connection.on('open', () => {
         console.log('MongoDB: Connected');

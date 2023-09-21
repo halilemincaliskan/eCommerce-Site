@@ -7,6 +7,6 @@ var usersSchema = new Schema({
     surname: String,
     username: String,
     pass: String,
-});
+}, {timestamps: true});
 
 module.exports = mongoose.model("user", usersSchema);
