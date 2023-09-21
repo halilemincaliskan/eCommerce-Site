@@ -1,4 +1,4 @@
-const User = require("../models/Users.model");
+const User = require("../models/User.model");
 
 async function getUser(req, res) {
     const users = await User.find({});
@@ -13,10 +13,10 @@ async function postUser(req, res){
     const user = new User({
       name: req.body.name,
       surname: req.body.surname,
-      username: req.body.username,
-      pass: req.body.pass,
+      email: req.body.email,
     });
     try {
+      user.setPassword(req.body.password);
       await user.save();
       res.send(user);
     } catch(error) {
