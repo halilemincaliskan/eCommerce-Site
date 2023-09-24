@@ -1,25 +1,24 @@
 const User = require('../models/User.model');
-const config = require('../config/jwt.config');
+const jwtConfig = require('../config/jwt.config');
+const jwt = require('jsonwebtoken');
 
 module.exports = async (req, res, next) => {
     const jwtToken = req.session.jwtToken;
-    console.log(jwtToken);
     if (jwtToken) {
         try {
             token = jwtToken.trim();
             const decoded = jwt.verify(token, jwtConfig.secret);
             
             User.findOne({_id: decoded._id})
-            .then((user) => {
-                
+            .then(() => {
                 return next();
             }).catch((err) => {
                 console.log(err);
             })
         } catch (error) {
-            return res.status(401).json({ message: 'Unauthorized'});
+            return res.status(401).json({ message: "Error: " + error });
         } 
     } else {
-        return res.status(400).json({ message: 'Authorization header is missing'});
+        res.redirect('/auth');
     }
 }
