@@ -23,7 +23,7 @@ async function test2(req, res){
 async function login(req, res){
     User.findOne({email: req.body.email})
         .then((user) => {
-            if (user.validPassword(req.body.password)) {
+            if (user && user.validPassword(req.body.password)) {
                 const token = jwt.sign({ _id: user._id }, jwtConfig.secret, { expiresIn: jwtConfig.expiration});
                 req.session.regenerate(function (err) {
                     if (err) next(err)

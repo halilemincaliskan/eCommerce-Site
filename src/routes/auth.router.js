@@ -6,9 +6,9 @@ router.get('/', authController.pageLoad);
 
 router.post('/login', authController.login);
 
-router.get('/user', authController.getUser);
-
 router.post('/register', authController.register);
+
+router.get('/user', authController.getUser);
 
 // For Test
 router.get('/user/test', authController.test);
